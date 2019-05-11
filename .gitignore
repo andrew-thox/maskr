@@ -45,6 +45,7 @@ pip-delete-this-directory.txt
 
 # Jupyter Notebook
 .ipynb_checkpoints
+.ipynb
 
 # pyenv
 .python-version
@@ -56,3 +57,4 @@ pip-delete-this-directory.txt
 .venv
 venv/
 ENV/
+
