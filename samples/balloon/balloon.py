@@ -176,16 +176,16 @@ class BalloonDataset(utils.Dataset):
             super(self.__class__, self).image_reference(image_id)
 
 
-def train(model):
+def train(model, dataset, learning_rate):
     """Train the model."""
     # Training dataset.
     dataset_train = BalloonDataset()
-    dataset_train.load_balloon(args.dataset, "train")
+    dataset_train.load_balloon(dataset, "train")
     dataset_train.prepare()
 
     # Validation dataset
     dataset_val = BalloonDataset()
-    dataset_val.load_balloon(args.dataset, "val")
+    dataset_val.load_balloon(dataset, "val")
     dataset_val.prepare()
 
     # *** This training schedule is an example. Update to your needs ***
@@ -194,7 +194,7 @@ def train(model):
     # no need to train all layers, just the heads should do it.
     print("Training network heads")
     model.train(dataset_train, dataset_val,
-                learning_rate=config.LEARNING_RATE,
+                learning_rate=learning_rate,
                 epochs=30,
                 layers='heads')
 
