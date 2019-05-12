@@ -8,6 +8,7 @@ RUN apt-get -y update && apt-get install -y python3-pip && pip3 install --upgrad
 RUN pip3 install \
     pipenv \
     paperspace \
+    tensorflow-gpu \
     Cython
 
 RUN pip3 install \
@@ -94,7 +95,7 @@ RUN pip3 install \
     sphinxcontrib-qthelp==1.0.2 \
     sphinxcontrib-serializinghtml==1.1.3 \
     tensorboard==1.13.1 \
-    tensorflow==1.13.1 \
+    tensorflow-gpu==1.13.1 \
     tensorflow-estimator==1.13.0 \
     termcolor==1.1.0 \
     terminado==0.8.2 \

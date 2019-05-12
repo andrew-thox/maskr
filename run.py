@@ -4,6 +4,7 @@ import requests
 import zipfile
 import io
 import os
+import tensorflow as tf
 
 # Download balloon dataset if required
 from samples.balloon.balloon import BalloonConfig, train
@@ -48,6 +49,15 @@ else:
 
 # Load weights
 print("Loading weights ", weights_path)
+
+# def get_session(gpu_fraction=0.333):
+#     gpu_options = tf.GPUOptions(
+#         per_process_gpu_memory_fraction=gpu_fraction,
+#         allow_growth=True)
+#     return tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+#
+# ktf.set_session(get_session())
+
 if weights.lower() == "coco":
     # Exclude the last layers because they require a matching
     # number of classes
