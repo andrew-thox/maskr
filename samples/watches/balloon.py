@@ -59,7 +59,7 @@ class BalloonConfig(Config):
     Derives from the base Config class and overrides some values.
     """
     # Give the configuration a recognizable name
-    NAME = "balloon"
+    NAME = "watch"
 
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
@@ -87,22 +87,23 @@ class BalloonDataset(utils.Dataset):
         subset: Subset to load: train or val
         """
         # Add classes. We have only one class to add.
-        self.add_class("balloon", 1, "balloon")
+        self.add_class("band", 1, "band")
 
         # Which subset?
         # "val": use hard-coded list above
         # "train": use data from stage1_train minus the hard-coded list above
         # else: use the data from the specified sub-directory
-        assert subset in ["train", "val", "stage1_train", "stage1_test", "stage2_test"]
-        subset_dir = "stage1_train" if subset in ["train", "val"] else subset
-        dataset_dir = os.path.join(dataset_dir, subset_dir)
+        assert subset in ["train", "val"]
+        dataset_dir = os.path.join(dataset_dir, subset)
         if subset == "val":
             image_ids  = [
-                "02059",
+                "000006", "000010", "000014", "000018", "000022", "000027", "000031", "000035", "000039", "000043",
+                "000047", "000051", "000055", "000059", "000063", "000067", "000071", "000075", "000079", "000083",
             ]
 
         else:
             # Get image ids from directory names
+            print(dataset_dir)
             image_ids = next(os.walk(dataset_dir))[1]
             if subset == "train":
                 image_ids = list(set(image_ids))
@@ -110,7 +111,8 @@ class BalloonDataset(utils.Dataset):
         # Add images
         for image_id in image_ids:
             self.add_image(
-                "balloon",
+                #  TODO: Should this be watch?
+                "band",
                 image_id=image_id,
                 path=os.path.join(dataset_dir, image_id, "images/{}.png".format(image_id)))
 
@@ -147,16 +149,16 @@ class BalloonDataset(utils.Dataset):
             super(self.__class__, self).image_reference(image_id)
 
 
-def train(model):
+def train(model, dataset, learning_rate):
     """Train the model."""
     # Training dataset.
     dataset_train = BalloonDataset()
-    dataset_train.load_balloon(args.dataset, "train")
+    dataset_train.load_balloon(dataset, "train")
     dataset_train.prepare()
 
     # Validation dataset
     dataset_val = BalloonDataset()
-    dataset_val.load_balloon(args.dataset, "val")
+    dataset_val.load_balloon(dataset, "val")
     dataset_val.prepare()
 
     # *** This training schedule is an example. Update to your needs ***
@@ -165,7 +167,7 @@ def train(model):
     # no need to train all layers, just the heads should do it.
     print("Training network heads")
     model.train(dataset_train, dataset_val,
-                learning_rate=config.LEARNING_RATE,
+                learning_rate=learning_rate,
                 epochs=30,
                 layers='heads')
 
