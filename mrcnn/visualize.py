@@ -6,7 +6,9 @@ Copyright (c) 2017 Matterport, Inc.
 Licensed under the MIT License (see LICENSE for details)
 Written by Waleed Abdulla
 """
+import io
 
+import cv2
 import os
 import sys
 import random
@@ -162,9 +164,15 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             verts = np.fliplr(verts) - 1
             p = Polygon(verts, facecolor="none", edgecolor=color)
             ax.add_patch(p)
+    cv2.imwrite('masked_image.png', masked_image.astype(np.uint8))
     ax.imshow(masked_image.astype(np.uint8))
     if auto_show:
         plt.show()
+    plt.savefig('plot.png')
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    return buf
 
 
 def display_differences(image,
