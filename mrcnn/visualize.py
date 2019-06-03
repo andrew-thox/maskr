@@ -172,6 +172,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
     buf = io.BytesIO()
     plt.savefig(buf, format='png', bbox_inches='tight')
     buf.seek(0)
+    plt.close()
     return buf
 
 
