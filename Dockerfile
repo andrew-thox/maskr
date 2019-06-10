@@ -111,5 +111,5 @@ RUN pip3 install \
     wcwidth==0.1.7 \
     webencodings==0.5.1 \
     Werkzeug==0.15.2 \
-    widgetsnbextension==3.4.2 \
+    widgetsnbextension==3.4.2
 
