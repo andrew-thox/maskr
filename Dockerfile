@@ -64,7 +64,7 @@ RUN pip3 install \
     nose==1.3.7 \
     notebook==5.7.8 \
     numpy==1.16.3 \
-    opencv-python==4.1.0.25 \
+    opencv-contrib-python-headless==4.1.1.26 \
     packaging==19.0 \
     pandocfilters==1.4.2 \
     parso==0.4.0 \
